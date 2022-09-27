@@ -19,11 +19,21 @@ class ArticleService extends Service{
     }
     
     async getArticle(){
-        let {pageNow=1,pageSize=20} = this.ctx.query
+        let {pageNow=1,pageSize=20,type} = this.ctx.query
+        let condition = {}
+        // console.log(this.ctx.query)
+        switch (type) {
+            case 'wode':
+                console.log(this.ctx.user)
+                condition.user = this.ctx.user._id
+                break;
+            default:
+                break;
+        }
         pageNow = Number.parseInt(pageNow)
         pageSize = Number.parseInt(pageSize)
         let skip = (pageNow-1)*pageSize
-        const list = await this.Article.find({},'-__v').populate('user','-_id -__v').skip(skip).sort({ updatedAt: -1 }).limit(pageSize).lean()
+        const list = await this.Article.find(condition,'-__v').populate('user','-_id -__v').skip(skip).sort({ updatedAt: -1 }).limit(pageSize).lean()
         const total = await this.Article.countDocuments()
         return {
             list,

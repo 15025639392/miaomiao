@@ -19,6 +19,8 @@ module.exports = app => {
   router.post('/article/update',auth, controller.article.update);
   router.post('/article/delete',auth, controller.article.delete);
   router.get('/article',controller.article.getList);
+  router.get('/my_article',auth,controller.article.getList);
+  router.get('/my_sub_article',auth,controller.article.getList);
   router.get('/article/detail', controller.article.getArticleDetail);
 
   router.post('/sign',controller.sign.getSign);
