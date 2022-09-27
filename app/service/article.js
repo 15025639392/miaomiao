@@ -23,7 +23,7 @@ class ArticleService extends Service{
         pageNow = Number.parseInt(pageNow)
         pageSize = Number.parseInt(pageSize)
         let skip = (pageNow-1)*pageSize
-        const list = await this.Article.find({},'-__v').populate('user','-_id -__v').skip(skip).limit(pageSize).lean()
+        const list = await this.Article.find({},'-__v').populate('user','-_id -__v').skip(skip).sort({ updatedAt: -1 }).limit(pageSize).lean()
         const total = await this.Article.countDocuments()
         return {
             list,

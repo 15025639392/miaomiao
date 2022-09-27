@@ -14,6 +14,10 @@ class UserService extends Service{
         return this.User.findOne({email})
     }
 
+    findById(id){
+        return this.User.findById(id)
+    }
+
     findByOpenId(openId){
         return this.User.findOne({openId})
     }
