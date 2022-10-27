@@ -26,7 +26,6 @@ class UserController extends Controller {
   async create(){
     const { ctx } = this;
     const body = ctx.request.body
-    console.log(ctx.request.body,body)
     ctx.validate({
         username:{
             type:'string'
@@ -50,7 +49,6 @@ class UserController extends Controller {
     const token = this.service.user.createToken({
         userId:user._id
     })
-    console.log(user)
     // 4.发送响应
     this.ctx.body = {
         user:{
@@ -127,6 +125,40 @@ class UserController extends Controller {
     const userList = await this.service.user.getUserList()
     this.ctx.body = {
         userList
+    }
+  }
+
+  async attention(){
+    await this.service.user.attention()
+    this.ctx.body = {
+        message:'ok'
+    }
+  }
+
+  async getUser(){
+    // 1.获取订阅状态
+    let isSubscribtion = false
+  
+    if(this.ctx.user){
+        // 检查订阅记录
+        const record = await this.app.model.Subscription.findOne({
+            user:this.ctx.user._id,
+            channel: this.ctx.request.query.channel
+        })
+        if(record){
+            isSubscribtion = true
+        }
+    }
+    // 2.获取用户信息
+    const user = await this.app.model.User.findById(this.ctx.request.query.channel)
+    // 3.发送响应
+    this.ctx.body = {
+        user:{
+            ...this.ctx.helper._.pick(user,[
+                'subscribersCount','_id','username','phone','avatar'
+            ]),
+            isSubscribtion
+        }
     }
   }
 }

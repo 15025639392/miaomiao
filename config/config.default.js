@@ -31,7 +31,9 @@ module.exports = appInfo => {
     client: {
       url: 'mongodb://localhost/my_database',
       options: {
-        useUnifiedTopology:true
+        useUnifiedTopology:true,
+        useNewUrlParser: true, 
+        useCreateIndex: true
       },
       // mongoose global plugins, expected a function or an array of function and options
       plugins: [],
@@ -50,6 +52,20 @@ module.exports = appInfo => {
     security:'961448793903793318528971',
     expiresIn:'100d'
   }
+
+  // config.io = {
+  //   init: { }, // passed to engine.io
+  //   namespace: {
+  //     '/': {
+  //       connectionMiddleware: [],
+  //       packetMiddleware: [],
+  //     },
+  //   },
+  //   redis: {
+  //     host: '127.0.0.1',
+  //     port: 6379
+  //   }
+  // }
 
   return {
     ...config,

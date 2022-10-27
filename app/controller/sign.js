@@ -6,7 +6,6 @@ class SignController extends Controller {
     const { ctx } = this;
     const body = ctx.request.body
     const res = await ctx.helper.sign(body.jsapi_ticket,body.url)
-    console.log(res)
     // 4.发送响应
     this.ctx.body = res
   }

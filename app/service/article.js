@@ -24,8 +24,13 @@ class ArticleService extends Service{
         // console.log(this.ctx.query)
         switch (type) {
             case 'wode':
-                console.log(this.ctx.user)
                 condition.user = this.ctx.user._id
+                break;
+            case 'guanzhu':
+                    const channels = await this.app.model.Subscription.find({user:this.ctx.user._id}).populate('channel')
+                    condition.user = {
+                        $in: channels.map(item=>item.channel._id)
+                    }
                 break;
             default:
                 break;
@@ -33,7 +38,7 @@ class ArticleService extends Service{
         pageNow = Number.parseInt(pageNow)
         pageSize = Number.parseInt(pageSize)
         let skip = (pageNow-1)*pageSize
-        const list = await this.Article.find(condition,'-__v').populate('user','-_id -__v').skip(skip).sort({ updatedAt: -1 }).limit(pageSize).lean()
+        const list = await this.Article.find(condition,'-__v -imgs').populate('user','-__v').skip(skip).sort({ updatedAt: -1 }).limit(pageSize).lean()
         const total = await this.Article.countDocuments()
         return {
             list,

@@ -63,10 +63,16 @@ class ArticleController extends Controller {
 
   async getArticleDetail(){
     const {id} = this.ctx.query
-    console.log(id)
     const result = await this.article.findById(id)
     this.ctx.body = {
-      detail:result
+      detail:{
+        ...this.ctx.helper._.pick(result,[
+          'imgs','content'
+        ]),
+        user:this.ctx.helper._.pick(result.user,[
+          '_id','avatar','username'
+        ])
+      }
     }
   }
 }
