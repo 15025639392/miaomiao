@@ -27,31 +27,31 @@ module.exports = appInfo => {
   };
 
   // recommended
-  config.mongoose = {
-    client: {
-      url: 'mongodb://localhost/my_database',
-      options: {
-        useUnifiedTopology:true,
-        useNewUrlParser: true, 
-        useCreateIndex: true
-      },
-      // mongoose global plugins, expected a function or an array of function and options
-      plugins: [],
-    },
-  };
+  // config.mongoose = {
+  //   client: {
+  //     url: 'mongodb://localhost/my_database',
+  //     options: {
+  //       useUnifiedTopology:true,
+  //       useNewUrlParser: true, 
+  //       useCreateIndex: true
+  //     },
+  //     // mongoose global plugins, expected a function or an array of function and options
+  //     plugins: [],
+  //   },
+  // };
 
 
-  config.security = {
-    csrf:{
-      enable:false
-    }
-  }
+  // config.security = {
+  //   csrf:{
+  //     enable:false
+  //   }
+  // }
 
-  config.jwt={
-    enable: true,
-    security:'961448793903793318528971',
-    expiresIn:'100d'
-  }
+  // config.jwt={
+  //   enable: true,
+  //   security:'961448793903793318528971',
+  //   expiresIn:'100d'
+  // }
 
   // config.io = {
   //   init: { }, // passed to engine.io
